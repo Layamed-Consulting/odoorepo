@@ -10,6 +10,11 @@
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
+        'report/custome_paper_format.xml',
+        'views/stock_quant_view.xml',
+        'views/transaction_report.xml',
+        'views/transaction_session.xml',
+
         'views/product_view.xml',
         'report/report_product_label.xml',
         'report/purchase_order_inherit.xml',
