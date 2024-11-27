@@ -7,13 +7,15 @@ import { patch } from "@web/core/utils/patch";
 
 patch(ClosePosPopup.prototype, {
     async closeSession() {
+        try {
+        //exception add
         const sessionId = this.pos.pos_session.id;
         const notes = this.state.notes || "";
-        const cashierName = this.pos.cashier.name;
-        const storeName = this.pos.config.name;
+        const cashierName = this.pos.cashier.name || "";
+        const storeName = this.pos.config.name || "";
         const cashDetails = this.props.default_cash_details;
-        const cashExpected = parseFloat(cashDetails.amount || 0);
-        const cashCounted = parseFloat(this.state.payments[cashDetails.id]?.counted || 0);
+        const cashExpected = parseFloat(cashDetails.amount || "0");
+        const cashCounted = parseFloat(this.state.payments[cashDetails.id]?.counted || "0");
         //const cashDifference = this.getDifference(); // Use getMaxDifference for cash
         const cashDifference = cashCounted - cashExpected;
 
@@ -30,8 +32,8 @@ patch(ClosePosPopup.prototype, {
                 notes: notes,
             },
             ...this.props.other_payment_methods.map(paymentMethod => {
-                const expected = parseFloat(paymentMethod.amount || 0);
-                const counted = parseFloat(this.state.payments[paymentMethod.id]?.counted || 0);
+                const expected = parseFloat(paymentMethod.amount || "0");
+                const counted = parseFloat(this.state.payments[paymentMethod.id]?.counted || "0");
                 const difference =  counted - expected;
 
                 return {
@@ -55,7 +57,9 @@ patch(ClosePosPopup.prototype, {
                 console.error("Failed to save transaction session data:", error);
             }
         }
-
         window.location = "/web#action=point_of_sale.action_client_pos_menu";
+        }catch (e) {
+            window.location = "/web#action=point_of_sale.action_client_pos_menu";
+        }
     },
 });
