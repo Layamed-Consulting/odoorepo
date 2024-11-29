@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates id="template" xml:space="preserve">
     <t t-name="pos_receipt_screen.receiptscreen_customer" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
-        <xpath expr="//div[@class='before-footer']" position="replace"/>
+        <xpath expr="//div[@class='before-footer']" position="replace">
+            <div class="ticket" style="margin-top:20px;text-align:center;font-size:15px;">
+             <t t-if="props.data.name">
+                 <div>--------------------------------</div>
+                 <div><b>Ticket de caisse :</b> <t t-esc="props.data.name"/></div>
+            </t>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='after-footer']" position="after">
+
+        </xpath>
         <xpath expr="//div[@class='pos-receipt-center-align']" position="replace">
-            <div t-if="props.data.footer" class="pos-receipt-center-align" style="white-space:pre-line; font-size:9px;">
+            <div t-if="props.data.footer" class="pos-receipt-center-align" style="white-space:pre-line; font-size:15px;">
                 <br/>
                 <t t-esc="props.data.footer" />
                 <br/>
@@ -19,9 +29,9 @@
                 <!--
                 <img t-att-src="'https://barcode.tec-it.com/barcode.ashx?data=' + encodeURIComponent(props.data.name) + '&amp;code=Code128&amp;translate-esc=true'" alt="Order Barcode" class="barcode-image" style="width: 200px; height: auto;"/>
 
-                <img t-att-src="'/web/binary/barcode?data=' + encodeURIComponent(props.data.pos_reference) + '&amp;type=CODE128&amp;width=2&amp;height=100'" alt="Barcode" />
+                <img t-att-src="'/web/binary/barcode?data=' + encodeURIComponent(props.data.name) + '&amp;type=CODE128&amp;width=2&amp;height=100'" alt="Barcode" />
 -->
-                <img t-att-src="'https://barcode.tec-it.com/barcode.ashx?data=' + props.data.name" alt="Order Barcode" class="barcode-image" style="width: 150px; height: auto;"/>
+                <img t-att-src="'https://barcode.tec-it.com/barcode.ashx?data=' + props.data.name" alt="Order Barcode" class="barcode-image" style="width: 300px; height: auto;"/>
 
             </div>
         </xpath>
@@ -36,6 +46,6 @@
                 </div>
             </t>
         </xpath>
-         -->
+-->
     </t>
 </templates>

@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="stock.view_stock_quant_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='quantity']" position="after">
-                <button name="action_print_labels"
+                <button name="action_print_label"
                         string="Print Labels"
                         type="object"
                         class="btn-secondary"
@@ -14,7 +14,7 @@
             </xpath>
 
             <xpath expr="//header/button[@name='action_inventory_at_date']" position="before">
-                <button name="action_print_labels"
+                <button name="action_print_label"
                         string="Print labels"
                         type="object"
                         class="btn-secondary"

@@ -7,4 +7,5 @@ from . import notification_category
 from . import transaction_check
 from . import transaction_session
 from . import stock_quant
+from . import purchaseorder
 
