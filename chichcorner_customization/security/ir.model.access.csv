@@ -8,3 +8,6 @@ access_transaction_session_user,access_transaction_session_user,chichcorner_cust
 access_transaction_session_manager,access_transaction_session_manager,chichcorner_customization.model_transaction_session,base.group_erp_manager,1,1,1,1
 access_transaction_check,access.transaction.check,model_transaction_check,base.group_user,1,1,1,1
 access_transaction_session,access.transaction.session,model_transaction_session,base.group_user,1,1,1,1
+
+access_api_key_user,access_api_key_user,chichcorner_customization.model_api_key,,1,1,1,0
+access_api_key_user_manager,access_api_key_user_manager,chichcorner_customization.model_api_key,base.group_erp_manager,1,1,1,1

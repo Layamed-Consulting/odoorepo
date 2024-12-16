@@ -6,6 +6,9 @@
         <field name="model">transaction.check</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="print_pdf_report" type="object" class="btn-primary" string="Print PDF" />
+                </header>
                 <sheet>
                     <group>
                         <field name="date"/>
@@ -16,15 +19,19 @@
                         <field name="transaction_ids">
                             <tree editable="bottom">
                                 <field name="session_id"/>
-                                <field name="payment_method_name"/>
-                                <field name="expected"/>
-                                <field name="counted_cash"/>
-                                <field name="payment_differences"/>
-                                <field name="store_name"/>
-                                <field name="close_time"/>
-                                <field name="cashier_name"/>
+                                <field name="payment_method_name" string="Mode de paiment"/>
+                                <field name="expected" string="Chiffre d'affaires" sum="Total"/>
+                                <field name="counted_cash" string="Compté" sum="Total"/>
+                                <field name="payment_differences" string="Différence"/>
+                                <field name="store_name" string="Nom du Magasin"/>
+                                <field name="close_time" string="Heure de clôture"/>
+                                <field name="cashier_name" string="Nom du caissier"/>
                             </tree>
                         </field>
+                    </group>
+                    <group class="oe_subtotal_footer">
+                        <field name="total_expected" string="Total Chiffre d'affaires"/>
+                        <field name="total_counted" string="Total Compté"/>
                     </group>
                 </sheet>
                 <div class="oe_chatter">
@@ -37,7 +44,7 @@
         </field>
     </record>
 
-    <!-- Tree -->
+
     <record id="view_transaction_check_tree" model="ir.ui.view">
         <field name="name">transaction.check.tree</field>
         <field name="model">transaction.check</field>
@@ -49,6 +56,7 @@
             </tree>
         </field>
     </record>
+
     <!-- acction -->
     <record id="action_transaction_check" model="ir.actions.act_window">
         <field name="name">Relevés</field>
@@ -57,7 +65,7 @@
         <field name="context">{}</field>
     </record>
 
-    <!-- Menu Items -->
+
     <menuitem id="menu_check_transaction"
               name="Relevée"
               parent="point_of_sale.menu_point_of_sale"

@@ -26,9 +26,25 @@ class TransactionCheck(models.Model):
 
     transaction_ids = fields.One2many("transaction.session", "check_id", string="Relevés")
 
+    total_expected = fields.Float(
+        string="Total Expected",
+        compute="_compute_totals",
+        store=True
+    )
+    total_counted = fields.Float(
+        string="Total Counted",
+        compute="_compute_totals",
+        store=True
+    )
+
+    @api.depends('transaction_ids', 'transaction_ids.expected', 'transaction_ids.counted_cash')
+    def _compute_totals(self):
+        for record in self:
+            record.total_expected = sum(record.transaction_ids.mapped('expected'))
+            record.total_counted = sum(record.transaction_ids.mapped('counted_cash'))
+
     @api.onchange('date', 'magasin_name')
     def _filter_transactions_by_date(self):
-        """Populate transaction_ids with transactions matching the selected date."""
         if self.date and self.magasin_name:
             _logger.info(f"Filtering transactions for date: {self.date}")
 
@@ -41,7 +57,8 @@ class TransactionCheck(models.Model):
                 ('close_time', '>=', start_datetime),
                 ('close_time', '<=', end_datetime),
                 ('store_name', '=', self.magasin_name.name),
-                ('check_id', '=', False)
+                ('check_id', '=', False),
+                ('expected', '!=', 0)
             ])
 
             _logger.info(f"Found {len(transactions)} transactions")
@@ -60,3 +77,6 @@ class TransactionCheck(models.Model):
     def write(self, vals):
         _logger.info(f"Writing values to transaction.check: {vals}")
         return super(TransactionCheck, self).write(vals)
+
+    def print_pdf_report(self):
+        return self.env.ref('chichcorner_customization.transaction_check_pdf_report').report_action(self)
